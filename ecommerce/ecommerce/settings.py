@@ -117,6 +117,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# is used for fetching the imagess from database when we add one image from the admin
 MEDIA_URL='/media/'
 MEDIA_ROOT=BASE_DIR/'media'
 
