@@ -86,6 +86,44 @@
 
 
 {% block main-content %}
-    <h1>Welcome<h1>
-    <h2>Here to help you shine</h2>
+    <div class="container"> 
+      <h2 class="text-center">Products</h2>
+      <br/><br/>
+      <div class="row wrap container">
+      
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-row-delay="0.6s" style="animation-duration: 1s; animation-delay:0.6s; animation-name: none;">
+          <div class="goodnesssec buttermilk smbg">
+          <a href="{% static 'category' 'ML' %}">
+            <div class="goodnessseccont text-center">
+              <img src="{% static 'app/images/product/milk-shake-strawberry.png' %}" class="img-responsive center-block" alt="">
+              <p class="mlkpro">Milk </p>
+            </div>
+          </a>
+          </div>
+        </div>
+      
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-row-delay="0.6s" style="animation-duration: 1s; animation-delay:0.6s; animation-name: none;">
+          <div class="goodnesssec buttermilk smbg">
+          <a href="{% static 'category' 'ML' %}">
+            <div class="goodnessseccont text-center">
+              <img src="{% static 'app/images/product/milk-shake-strawberry.png' %}" class="img-responsive center-block" alt="">
+              <p class="mlkpro">Milk </p>
+            </div>
+          </a>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-sm-4 mi-go wow fadeInUp" data-wow-duration="1s" data-row-delay="0.6s" style="animation-duration: 1s; animation-delay:0.6s; animation-name: none;">
+          <div class="goodnesssec buttermilk smbg">
+          <a href="{% static 'category' 'ML' %}">
+            <div class="goodnessseccont text-center">
+              <img src="{% static 'app/images/product/milk-shake-strawberry.png' %}" class="img-responsive center-block" alt="">
+              <p class="mlkpro">Milk </p>
+            </div>
+          </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
 {% endblock main-content %}
