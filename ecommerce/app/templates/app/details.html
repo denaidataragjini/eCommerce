@@ -6,8 +6,15 @@
 <div class="container marketing">
 <div class="row featurette m-3 p-3">
     <div class="col-md-5 order-md-2 mt-2">
-      <h2 class="featurette-heading">{{ product.name }}</h2>
-      <p>Lek <b>{{ product.price }} </b></p>
+      <h2 class="featurette-heading text-success">{{ product.name }}</h2>
+       {% if product.discount_price %}
+        <p class="card-text">
+            <span class="text-decoration-line-through">Lek {{ product.price }}</span>
+            <span class="text-success">Lek {{ product.discount_price }}</span>
+        </p>
+        {% else %}
+            <p class="card-text">Cmimi: Lek {{ product.price }}</p>
+        {% endif %}
         <hr>
       <p class="lead">{{product.description}}</p>
       <div class="d-grid gap-2 mx-auto">

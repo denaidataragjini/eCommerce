@@ -44,7 +44,7 @@
                         <div class="card">
                             <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
                             <div class="card-body">
-                                <h5 class="card-title">{{ product.name }}</h5>
+                                <h5 class="card-title">{{ product.name | truncatewords:7 }}</h5>
                                 <p class="card-text">{{ product.description | truncatewords:10 }}</p>
                                 <div class="d-grid gap-2 d-md-block">
                                     <a href="{% url 'details' product.id %}" class="btn btn-outline-primary">Shiko detajet</a>
