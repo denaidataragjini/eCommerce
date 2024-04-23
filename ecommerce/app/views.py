@@ -11,12 +11,12 @@ def get_categories_and_brands():
 
 def get_products_by_category(category_name):
     category = Category.objects.get(slug=category_name)
-    return Product.objects.filter(category=category)
+    return Product.objects.filter(category=category).all()
 
 
 def get_products_by_brand(brand_name):
     brand = Brand.objects.get(name=brand_name)
-    return Product.objects.filter(brand=brand)
+    return Product.objects.filter(brand=brand).all()
 
 
 def home(request):
@@ -65,3 +65,10 @@ class BrandView(BaseView):
         }
         print(products)
         return render(request, self.template_name, context)
+    
+
+class DetailView(View):
+    def get(self,request):
+        return render(request,"app/details.html")
+
+
