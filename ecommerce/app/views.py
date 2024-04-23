@@ -1,15 +1,30 @@
 from django.shortcuts import render
 from django.views import View
+from .models import Category, Brand
 
-# Create your views here.
+
+def get_categories_and_brands():
+    return {
+        'categories': Category.objects.all(),
+        'brands': Brand.objects.all(),
+    }
+
+
 def home(request):
-    return render(request,"app/home.html")
+    context = get_categories_and_brands()
+    return render(request, "app/home.html", context)
 
-# There are two ways to render the page, by class and by function
-class CategoryView(View):
-    def get(self,request):
-        return render(request,"app/category.html")
 
-class BrandView(View):
-    def get(self,request):
-        return render(request,"app/brand.html")
+class BaseView(View):
+    def get(self, request, val=None):
+        context = get_categories_and_brands()
+        context['val'] = val
+        return render(request, self.template_name, context)
+
+
+class CategoryView(BaseView):
+    template_name = "app/category.html"
+
+
+class BrandView(BaseView):
+    template_name = "app/brand.html"

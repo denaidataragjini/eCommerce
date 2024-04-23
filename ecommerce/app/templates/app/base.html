@@ -33,10 +33,11 @@
                         Kujdesi i lekures
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Dreses</a></li>
-                        <li><a class="dropdown-item" href="#">Tops</a></li>
+                        {% for category in categories %}
+                            <li><a class="dropdown-item"  href="{% url 'category' val=category.slug %}">{{ category.name }}</a></li>
+                        {% endfor %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">View all</a></li>
+                        <li><a class="dropdown-item" href="/category/">Te gjitha</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -44,10 +45,11 @@
                         Markat
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">T-Shirts</a></li>
-                        <li><a class="dropdown-item" href="#">Jeans</a></li>
+                        {% for brand in brands %}
+                            <li><a class="dropdown-item"  href="{% url 'brand' val=brand.name %}">{{ brand.name }}</a></li>
+                        {% endfor %}
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">View all</a></li>
+                        <li><a class="dropdown-item" href="/brand/">Te gjitha</a></li> 
                     </ul>
                 </li>
                 <li class="nav-item">
