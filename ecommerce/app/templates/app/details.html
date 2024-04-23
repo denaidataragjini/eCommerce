@@ -2,13 +2,22 @@
 {% load static %}
 {% block title %}Detaje{% endblock title %}
 
-<div class="row featurette">
-    <div class="col-md-7 order-md-2">
-      <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-      <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+{% block main-content %}
+<div class="container marketing">
+<div class="row featurette m-3 p-3">
+    <div class="col-md-5 order-md-2 mt-2">
+      <h2 class="featurette-heading">{{ product.name }}</h2>
+      <p>Lek <b>{{ product.price }} </b></p>
+        <hr>
+      <p class="lead">{{product.description}}</p>
+      <div class="d-grid gap-2 mx-auto">
+        <button class="btn btn-outline-primary" type="button">Shto ne karte</button>
+        <button class="btn btn-outline-success" type="button">Bli tani</button>
+      </div>
     </div>
     <div class="col-md-5 order-md-1">
-      <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"></rect><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
-
+      <img src="{{ product.image.url }}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="{{product.name}}">
     </div>
   </div>
+</div>
+{% endblock main-content %}

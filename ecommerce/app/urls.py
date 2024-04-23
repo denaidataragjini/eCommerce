@@ -11,5 +11,5 @@ urlpatterns = [
     path('category/<slug:val>/', views.CategoryView.as_view(), name='category'),  # URL pattern for /category/<val>/
     path('brand/',views.BrandView.as_view(),name="brand"),
     path('brand/<val>',views.BrandView.as_view(),name="brand"),
-    path('details/>',views.DetailView.as_view(),name="details"),
+    path('details/<int:pk>', views.DetailView.as_view(), name="details"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

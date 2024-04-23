@@ -67,8 +67,16 @@ class BrandView(BaseView):
         return render(request, self.template_name, context)
     
 
-class DetailView(View):
-    def get(self,request):
-        return render(request,"app/details.html")
-
+class DetailView(BaseView):
+    template_name = "app/details.html"
+    def get(self,request,pk):
+        product = Product.objects.get(pk=pk)
+        
+        context = {
+            'product':product,
+            'pk':pk,
+            **get_categories_and_brands(),
+        }
+        print(product)
+        return render(request, self.template_name, context)
 

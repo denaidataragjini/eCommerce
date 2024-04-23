@@ -16,7 +16,8 @@
             <h5 class="text-success ms-3">Kategoria</h5>
             <div class="list-group mb-2">
                 {% for category in categories %}
-                <button type="button" class="list-group-item list-group-item-action">{{ category.name }}</button>
+                <a class="list-group-item list-group-item-action" href='{% url 'category' val=category.slug %}'>{{ category.name }}</a>
+                {% comment %} <button type="button" class="list-group-item list-group-item-action">{{ category.name }}</button> {% endcomment %}
                 {% endfor %}
             </div>
 
@@ -47,8 +48,8 @@
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <p class="card-text">{{ product.description | truncatewords:10 }}</p>
                                 <div class="d-grid gap-2 d-md-block">
-                                    <button class="btn btn-outline-primary" type="button">Shiko detajet</button>
-                                    <button class="btn btn-outline-success" type="button">Shto ne karte</button>
+                                    <a href="{% url 'details' product.id %}" class="btn btn-outline-primary">Shiko detajet</a>
+                                    <a href="{% url 'details' pk=product.pk %}" class="btn btn-outline-primary">Shto ne karte</a>
                                   </div>
                             </div>
                         </div>
