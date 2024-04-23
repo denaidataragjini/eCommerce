@@ -48,7 +48,7 @@
                                 <p class="card-text">{{ product.description | truncatewords:10 }}</p>
                                 <div class="d-grid gap-2 d-md-block">
                                     <a href="{% url 'details' product.id %}" class="btn btn-outline-primary">Shiko detajet</a>
-                                    <a href="{% url 'details' pk=product.pk %}" class="btn btn-outline-primary">Shto ne karte</a>
+                                    <a href="{% url 'details' pk=product.pk %}" class="btn btn-outline-success">Shto ne karte</a>
                                   </div>
                             </div>
                         </div>

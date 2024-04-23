@@ -2,7 +2,68 @@
 {% load static %}
 {% block title %}Marka{% endblock title %}
 
-
 {% block main-content %}
-    <h1>Marka : {{val}}</h1>
+  <div class="container p-3 m-5">
+    <div class="row">
+        <section class="col-3">
+            <h5 class="text-success ms-3"> Rendit </h5>
+            <select class="form-select mb-4">
+                <option> Alphabetical </option>
+                <option>Cmimi: Nga me i ulti te me i larti </option>
+                <option>Cmimi: Nga me i larti te me i ulti </option>
+            </select>
+
+            <h5 class="text-success ms-3">Kategoria</h5>
+            <div class="list-group mb-2">
+                {% for brand in brands %}
+                <a class="list-group-item list-group-item-action" href='{% url 'brand' val=brand.name %}'>{{ brand.name }}</a>
+                {% endfor %}
+            </div>
+
+        </section>
+
+        <section class="col-9">
+            <div class ="d-flex justify-content-between align-items-center pb-2">
+            
+            <!-- Pagination Header -->
+            {% comment %} <app-paging-header
+                [totalCount]="totalCount"
+                [pageNumber]="shopParams.pageNumber"
+                [pageSize]="shopParams.pageSize">
+            </app-paging-header> {% endcomment %}
+                
+                <div class="d-flex mt-2">
+                    <input type="text" placeholder="Search" class="form-control me-2" #search>
+                    <button class="btn btn-outline-primary mx-2">Search</button>
+                    <button class="btn btn-outline-success mx-2">Reset</button>
+                </div>
+            </div>
+            <div class="row row-cols-3 g-3 mb-4">
+                {% for product in products %}
+                    <div class="card-group">
+                        <div class="card">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.description | truncatewords:10 }}</p>
+                                <div class="d-grid gap-2 d-md-block">
+                                    <a href="{% url 'details' product.id %}" class="btn btn-outline-primary">Shiko detajet</a>
+                                    <a href="{% url 'details' pk=product.pk %}" class="btn btn-outline-success">Shto ne karte</a>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% comment %} <div class="d-flex justify-content-center"  *ngIf="totalCount > 0">
+                <app-pager
+                [totalCount]="totalCount"
+                [pageSize]="shopParams.pageSize"
+                (pageChanged)="onPageChanged($event)">
+                </app-pager>
+            </div> {% endcomment %}
+        </section>
+    </div>
+</div>
 {% endblock main-content %}
