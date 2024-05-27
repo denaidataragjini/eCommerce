@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views import View
 
-from ecommerce.app.forms import CustomerRegistrationForm
+from .forms import CustomerRegistrationForm
 from .models import Category, Brand, Product
+
+from django.contrib import messages
 
 
 def get_categories_and_brands():
@@ -87,4 +89,13 @@ class CustomerRegistrationView(View):
     template_name = "app/register.html"
     def get(self,request):
         form = CustomerRegistrationForm()
+        return render(request,self.template_name,locals())
+    def post(self,request):
+        form = CustomerRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully')
+            # return redirect('login')
+        else:
+            messages.warning(request,"Invalid Input Data")
         return render(request,self.template_name,locals())
