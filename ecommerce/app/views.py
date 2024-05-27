@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views import View
+
+from ecommerce.app.forms import CustomerRegistrationForm
 from .models import Category, Brand, Product
 
 
@@ -80,3 +82,9 @@ class DetailView(BaseView):
         print(product)
         return render(request, self.template_name, context)
 
+
+class CustomerRegistrationView(View):
+    template_name = "app/register.html"
+    def get(self,request):
+        form = CustomerRegistrationForm()
+        return render(request,self.template_name,locals())
