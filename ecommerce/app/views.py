@@ -49,7 +49,6 @@ class CategoryView(BaseView):
             'val': val,
             **get_categories_and_brands(),
         }
-        print(products)
         return render(request, self.template_name, context)
 
 
@@ -67,7 +66,6 @@ class BrandView(BaseView):
             'val': val,
             **get_categories_and_brands(),
         }
-        print(products)
         return render(request, self.template_name, context)
     
 
@@ -81,21 +79,28 @@ class DetailView(BaseView):
             'pk':pk,
             **get_categories_and_brands(),
         }
-        print(product)
         return render(request, self.template_name, context)
 
 
 class CustomerRegistrationView(View):
     template_name = "app/register.html"
     def get(self,request):
-        form = CustomerRegistrationForm()
-        return render(request,self.template_name,locals())
+
+        context = {
+            'form': CustomerRegistrationForm(),
+            **get_categories_and_brands(),
+        }
+        return render(request,self.template_name,context)
     def post(self,request):
         form = CustomerRegistrationForm(request.POST)
+        context = {
+            'form': form,
+            **get_categories_and_brands(),
+        }
         if form.is_valid():
             form.save()
             messages.success(request, 'Account created successfully')
             # return redirect('login')
         else:
             messages.warning(request,"Invalid Input Data")
-        return render(request,self.template_name,locals())
+        return render(request,self.template_name,context)
