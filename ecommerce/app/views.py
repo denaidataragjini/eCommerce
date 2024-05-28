@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 
-from .forms import CustomerRegistrationForm
+from .forms import CustomerRegistrationForm,CustomerProfileForm
 from .models import Category, Brand, Product
 
 from django.contrib import messages
@@ -104,3 +104,16 @@ class CustomerRegistrationView(View):
         else:
             messages.warning(request,"Invalid Input Data")
         return render(request,self.template_name,context)
+
+
+class ProfileView(View):
+    template_name = "app/profile.html"
+    def get(self,request):
+        form = CustomerProfileForm()
+        context = {
+            'form': form,
+            **get_categories_and_brands(),
+        }
+        return render(request,self.template_name,context)
+    def post(self,request):
+        return render(request,self.template_name,locals())
