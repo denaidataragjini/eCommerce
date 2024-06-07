@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 
 from .forms import CustomerRegistrationForm,CustomerProfileForm
-from .models import Category, Brand, Product
+from .models import Category, Brand, Customer, Product
 
 from django.contrib import messages
 
@@ -82,7 +82,7 @@ class DetailView(BaseView):
         return render(request, self.template_name, context)
 
 
-class CustomerRegistrationView(View):
+class CustomerRegistrationView(BaseView):
     template_name = "app/register.html"
     def get(self,request):
 
@@ -106,14 +106,74 @@ class CustomerRegistrationView(View):
         return render(request,self.template_name,context)
 
 
-class ProfileView(View):
+class ProfileView(BaseView):
     template_name = "app/profile.html"
-    def get(self,request):
+
+    def get(self, request):
         form = CustomerProfileForm()
         context = {
             'form': form,
             **get_categories_and_brands(),
         }
-        return render(request,self.template_name,context)
-    def post(self,request):
-        return render(request,self.template_name,locals())
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        form = CustomerProfileForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            # Access cleaned_data from the form instance
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            phone_number = form.cleaned_data['phone_number']
+            address = form.cleaned_data['address']
+            city = form.cleaned_data['city']
+            state = form.cleaned_data['state']
+            country = form.cleaned_data['country']
+            zip_code = form.cleaned_data['zip_code']
+
+            reg = Customer(
+                user=user, 
+                first_name=first_name, 
+                last_name=last_name, 
+                email=email,
+                phone_number=phone_number, 
+                address=address, 
+                city=city, 
+                state=state, 
+                country=country, 
+                zip_code=zip_code
+            )
+            reg.save()
+            messages.success(request, "Profile saved successfully!")
+        else:
+            messages.warning(request, "Invalid input data")
+        return render(request, self.template_name, {'form': form})
+    
+def address(request):
+    add = Customer.objects.filter(user= request.user)
+    return render(request,'app/address.html',locals())
+
+class updateAddress(View):
+    def get(self,request,pk):
+        add = Customer.objects.get(pk=pk)
+        form= CustomerProfileForm(instance=add)
+        return render(request,'app/updateAddress.html',locals())
+    def post(self,request,pk):
+        form= CustomerProfileForm(request.POST)
+        if form.is_valid():
+            add = Customer.objects.get(pk=pk)
+            add.first_name = form.cleaned_data['first_name']
+            add.last_name = form.cleaned_data['last_name']
+            add.email = form.cleaned_data['email']
+            add.phone_number = form.cleaned_data['phone_number']
+            add.address = form.cleaned_data['address']
+            add.city = form.cleaned_data['city']
+            add.state = form.cleaned_data['state']
+            add.country = form.cleaned_data['country']
+            add.zip_code = form.cleaned_data['zip_code']
+            add.save()
+            messages.success(request, "Profile updateted successfully!")
+        else:
+            messages.warning(request, "Invalid input data")
+        return redirect('address')
