@@ -6,25 +6,25 @@ from .forms import LoginForm, MyPassworChangeForm, MySetPasswordForm,MyPasswordR
 from . import views
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_view
+from django.contrib.auth.decorators import login_required, permission_required
 
 urlpatterns = [
     path('',views.home),
-    path('category/', views.CategoryView.as_view(), name="category"),  # URL pattern for /category/
-    path('category/<slug:val>/', views.CategoryView.as_view(), name='category'),  # URL pattern for /category/<val>/
-    path('brand/',views.BrandView.as_view(),name="brand"),
-    path('brand/<val>',views.BrandView.as_view(),name="brand"),
-    path('details/<int:pk>', views.DetailView.as_view(), name="details"),
-    path('profile/',views.ProfileView.as_view(),name='profile'),
-    path('address/',views.address,name='address'),
-    path('updateAddress/<int:pk>',views.updateAddress.as_view(),name='updateAddress'),
-    
+    path('category/', login_required(views.CategoryView.as_view()), name="category"),  # URL pattern for /category/
+    path('category/<slug:val>/', login_required(views.CategoryView.as_view()), name='category'),  # URL pattern for /category/<val>/
+    path('brand/',login_required(views.BrandView.as_view()),name="brand"),
+    path('brand/<val>',login_required(views.BrandView.as_view()),name="brand"),
+    path('details/<int:pk>', login_required(views.DetailView.as_view()), name="details"),
+    path('profile/',login_required(views.ProfileView.as_view()),name='profile'),
+    path('address/',login_required(views.address),name='address'),
+    path('updateAddress/<int:pk>',login_required(views.updateAddress.as_view()),name='updateAddress'),   
 
-    path('add-to-cart/<int:pk>',views.add_to_cart,name='add-to-cart'),
-    path('cart/',views.show_cart,name='cart'),
-    path('checkout/',views.checkout.as_view(),name='checkout'),
-    path('pluscart/',views.plus_cart,name='pluscart' ),
-    path('minuscart/',views.minus_cart,name='minuscart' ),
-    path('removecart/',views.remove_cart,name='removecart' ),
+    path('add-to-cart/<int:pk>', login_required(views.add_to_cart), name='add-to-cart'),
+    path('cart/', login_required(views.show_cart), name='cart'),
+    path('checkout/', login_required(views.checkout.as_view()), name='checkout'),
+    path('pluscart/', login_required(views.plus_cart), name='pluscart'),
+    path('minuscart/', login_required(views.minus_cart), name='minuscart'),
+    path('removecart/', login_required(views.remove_cart), name='removecart'),
 
     #login authentication
     path('registration/', views.CustomerRegistrationView.as_view(), name='customerregistration'),
