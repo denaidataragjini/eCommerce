@@ -104,3 +104,47 @@ class Customer(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.email})"
 
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    class Meta:
+        verbose_name = 'Cart'
+        verbose_name_plural = 'Carts'
+        
+    @property
+    def total_cost(self):
+          if(self.product.discount_price):
+            return self.quantity * self.product.discount_price
+          else:
+            return self.quantity * self.product.price
+ 
+STATUS_CHOICES=(
+    ('Accepted', 'Accepted'),
+    ('Packed', 'Packed'),
+    ('On The Way', 'On The Way'),
+    ('Delivered', 'Delivered'),
+    ('Cancel', 'Cancel'),
+    ('Pending', 'Pending')
+)
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount= models.FloatField()
+    pay_order_id= models.CharField(max_length=100, blank=True, null= True)
+    pay_payment_status= models.CharField(max_length=100, blank=True, null= True)
+    pay_payment_id= models.CharField(max_length=100, blank=True, null= True)
+    paid= models.BooleanField(default=False)
+class OrderPlaced(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    ordered_date = models.DateTimeField(auto_now_add=True)
+    status= models.CharField(max_length=50, choices=STATUS_CHOICES, default='Pending')
+    payment=  models.ForeignKey(Payment, on_delete=models.CASCADE, default="")
+    @property
+    def total_cost(self):
+        if(self.product.discount_price):
+          return self.quantity * self.product.discount_price
+        else:
+           return self.quantity * self.product.price

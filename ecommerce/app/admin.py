@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import City, Customer, Product, Category, Brand, State
+from .models import Cart, City, Customer, OrderPlaced, Payment, Product, Category, Brand, State
 
 # Register your models here.
 
@@ -43,3 +43,14 @@ class CustomerAdmin(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name', 'email', 'phone_number', 'city__name', 'state__name', 'country')
     list_filter = ('state', 'city', 'country', 'date_joined')
     ordering = ('last_name', 'first_name')
+
+@admin.register(Cart)
+class CartModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'product', 'quantity')
+
+@admin.register(Payment)
+class PaymentModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'amount', 'pay_order_id', 'pay_payment_status', 'pay_payment_id', 'paid')
+@admin.register(OrderPlaced)
+class OrderPlacedModelAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'product', 'customer', 'quantity', 'ordered_date', 'status', 'payment')

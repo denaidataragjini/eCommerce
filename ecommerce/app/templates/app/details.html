@@ -17,10 +17,13 @@
         {% endif %}
         <hr>
       <p class="lead">{{product.description}}</p>
-      <div class="d-grid gap-2 mx-auto">
-        <button class="btn btn-outline-primary" type="button">Shto ne karte</button>
-        <button class="btn btn-outline-success" type="button">Bli tani</button>
-      </div>
+      <!-- <div class="d-grid gap-2 mx-auto"> -->
+
+          <a href="{% url 'add-to-cart' product.id  %}" class="btn btn-outline-primary px-5" type="button">Shto ne karte </a>
+           
+        </form>
+        <a href="{% url 'cart' %}" class="btn btn-outline-success px-5" type="button">Bli tani  </a>
+      <!-- </div> -->
     </div>
     <div class="col-md-5 order-md-1">
       <img src="{{ product.image.url }}" class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" alt="{{product.name}}">
