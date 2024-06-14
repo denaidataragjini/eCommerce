@@ -153,13 +153,23 @@ class ProfileView(BaseView):
     
 def address(request):
     add = Customer.objects.filter(user= request.user)
-    return render(request,'app/address.html',locals())
+    context = {
+        'add':add,
+        **get_categories_and_brands(),
+    }
+    return render(request,'app/address.html',context)
 
 class updateAddress(View):
+    template_name = 'app/updateAddress.html'
     def get(self,request,pk):
         add = Customer.objects.get(pk=pk)
         form= CustomerProfileForm(instance=add)
-        return render(request,'app/updateAddress.html',locals())
+        context = {
+            'add': add,
+            'form': form,
+            **get_categories_and_brands(),
+        }
+        return render(request,self.template_name,context)
     def post(self,request,pk):
         form= CustomerProfileForm(request.POST)
         if form.is_valid():
@@ -190,14 +200,21 @@ def show_cart(request):
      cart= Cart.objects.filter(user=user)
      amount=0
      for p in cart:
-         value=0;
+         value=0
          if(p.product.discount_price): 
            value= p.quantity * p.product.discount_price
          else:
            value= p.quantity * p.product.price
          amount= amount + value
      totalamount= amount +200
-     return render(request, 'app/addtocart.html',locals())
+     context = {
+            'user':user,
+            'cart': cart,
+            'amount': amount,
+            'totalamount':totalamount,
+            **get_categories_and_brands(),
+        }
+     return render(request, 'app/addtocart.html',context)
 
 class checkout(View):
    def get(self, request):
@@ -212,7 +229,15 @@ class checkout(View):
            value= p.quantity * p.product.price
          famount= famount+value
        totalamount=famount+200
-       return render(request, 'app/checkout.html',locals())
+       context = {
+            'user':user,
+            'add': add,
+            'cart_items': cart_items,
+            'famount':famount,
+            'totalamount':totalamount,
+            **get_categories_and_brands(),
+        }
+       return render(request, 'app/checkout.html',context)
       
 
 def plus_cart(request):
@@ -224,7 +249,7 @@ def plus_cart(request):
         cart= Cart.objects.filter(user=request.user)
         amount=0
         for p in cart:
-          value=0;
+          value=0
           if(p.product.discount_price): 
            value= p.quantity * p.product.discount_price
           else:
@@ -247,7 +272,7 @@ def minus_cart(request):
         cart= Cart.objects.filter(user=request.user)
         amount=0
         for p in cart:
-          value=0;
+          value=0
           if(p.product.discount_price): 
            value= p.quantity * p.product.discount_price
           else:
@@ -269,7 +294,7 @@ def remove_cart(request):
         cart= Cart.objects.filter(user=request.user)
         amount=0
         for p in cart:
-          value=0;
+          value=0
           if(p.product.discount_price): 
            value= p.quantity * p.product.discount_price
           else:
